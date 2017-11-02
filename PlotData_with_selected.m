@@ -15,7 +15,7 @@ static    = 0;
             td_selected=selected_joints((k-1)*9+1:k*9,:);
             if(static==1)
                 td = td - repmat(td(1,:),[25,1]);
-                 td_selected=  td_selected- repmat( td_selected(1,:),[9,1]);
+                td_selected=  td_selected- repmat( td_selected(1,:),[9,1]);
             end
             
             

@@ -24,7 +24,7 @@ static    = 1;
             view([-170, -50]); %  
             hold on
             scatter3(td(:,1),td(:,2),td(:,3),'.');
-            grid on
+           grid on
             
             for kk=1:size(joints,1)
                 plot3([td(joints(kk,1),1) ,td(joints(kk,2),1) ],...

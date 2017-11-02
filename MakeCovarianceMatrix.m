@@ -1,5 +1,5 @@
 % covariance representation
-function [Xa_l, Xa_r] = MakeCovarianceMatrix(seq) 
+function [Xa] = MakeCovarianceMatrix(seq) 
 
 [N T]=size(seq);
 
@@ -35,19 +35,20 @@ input=reshape(seq', 75, N/25);
 % WristLeft	6 	Left wrist
 % WristRight	10 
 temp=input;
-input=input([15*3+1:15*3+3, 19*3+1:19*3+3, 16*3+1:16*3+3, 20*3+1:20*3+3, 13*3+1:13*3+3, 17*3+1:17*3+3, 14*3+1:14*3+3, 18*3+1:18*3+3, 2*3+1:2*3+3],:); %take only left ankle, right ankle, left foot, right foot, l hip, r hip, l knee, r knee, mid spine
-
+[ign t]=size(input);
+input=input([14*3+1:14*3+3, 12*3+1:12*3+3, 13*3+1:13*3+3, 15*3+1:15*3+3, 3*3+1:3*3+3, 19*3+1:19*3+3, 17*3+1:17*3+3,  16*3+1:16*3+3,  18*3+1:18*3+3],:); %take only left ankle, right ankle, left foot, right foot, l hip, r hip, l knee, r knee, mid spine
+           %([15*3+1:15*3+3, 19*3+1:19*3+3, 16*3+1:16*3+3, 20*3+1:20*3+3, 13*3+1:13*3+3, 17*3+1:17*3+3, 14*3+1:14*3+3, 18*3+1:18*3+3, 2*3+1:2*3+3],:)
 % make two matrice, for the right and left foot. for the second one simply
 % flip the model
 
-% XYZ=reshape(input, 3, 288)';
+ XYZ=reshape(input, 3, 9*t)';
 % 
-% PlotData_with_selected(seq, XYZ);
+ PlotData_with_selected(seq, XYZ);
 
 [N T]=size(input);
 
 
-Xa=1/(1-T)*input*(1/T* eye(T)-ones(T,T))*transpose(input);
+Xa=1/(T-1)*input*(1/T* eye(T)-ones(T,T))*transpose(input);
 % 3J×3J SPD matrix
 
 

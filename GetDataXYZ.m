@@ -18,7 +18,9 @@ Z=Joints(:,3:7:end);
 X=bsxfun(@minus,X,X(:,1));
 Y=bsxfun(@minus,Y,Y(:,1));
 Z=bsxfun(@minus,Z,Z(:,1));
-
+%% TO DO ?
+%   Determine  the  normalising  lengthLi as  the  average Euclidean
+%   distance between the joints and the centroid C and normalize
 
 X1=[]; Y1=[]; Z1=[];
 
