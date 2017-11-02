@@ -69,13 +69,13 @@ end
 
 % if no right or left sequence were detected
 if numel(period)<2 
-    period=[1, T];
+  
     figure
     subplot(2,1,1);
     plot(LEFT_original'); title('Left X Y Z value');
     subplot(2,1,2);
     plot(anklZ'); title('Left converted from right X Y Z values');
-  
+    period=[1, T];
     LeftLeg = input('no section were detected, decide if you want to keep it, and if yes, for which foot: 1-left, 0=right, 5=skip :');
     if(LeftLeg==0)
         data=MirrowData(data);   
@@ -83,11 +83,12 @@ if numel(period)<2
     left_cycle_left=data;
 
 elseif (LeftLeg==1)
-    left_cycle_left=data(:,p(1):p(2)); %take first period
+    left_cycle_left=data(:,period(1):period(2)); %take first period
 
 else
         data=MirrowData(data);
-        left_cycle_left = data(:,p(1):p(2));
+        left_cycle_left = data(:,period(1):period(2));
+        period=[1, size(left_cycle_left,2)];
 end
             
 %%
@@ -159,6 +160,6 @@ figure
     plot(anklZ'); hold on  
     scatter(period,[anklZ(3,period(1));anklZ(3,period(2))], 'r*'); title('Final cycle data'); hold off;
     pause();
-    
-
+[N T]=size( left_cycle_left);    
+ left_cycle_left=reshape(left_cycle_left, 3, 25*T)';
 end
