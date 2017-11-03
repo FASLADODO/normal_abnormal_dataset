@@ -1,6 +1,6 @@
 % main experiment
 % load data
-train=load('normal_evaluation/training.mat')
+train=load('normal_evaluation/testing.mat')
 train=train.data_save;
 persons=fieldnames(train);
 num_persons=numel(persons);

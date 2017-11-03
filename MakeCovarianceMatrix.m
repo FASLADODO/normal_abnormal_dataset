@@ -1,6 +1,8 @@
 % covariance representation
-function [Xa] = MakeCovarianceMatrix(seq) 
+function [Xa] = MakeCovarianceMatrix(data) 
+for j=1:numel(data)
 
+seq=data{j};
 [N T]=size(seq);
 
 %reshape the data to shape 25xT, where T - number of frames
@@ -48,8 +50,8 @@ input=input([14*3+1:14*3+3, 12*3+1:12*3+3, 13*3+1:13*3+3, 15*3+1:15*3+3, 3*3+1:3
 [N T]=size(input);
 
 
-Xa=1/(T-1)*input*(1/T* eye(T)-ones(T,T))*transpose(input);
+Xa{j}=1/(T-1)*input*(1/T* eye(T)-ones(T,T))*transpose(input);
 % 3J×3J SPD matrix
 
-
+end
 end

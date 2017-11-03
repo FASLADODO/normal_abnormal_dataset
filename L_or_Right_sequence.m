@@ -84,17 +84,20 @@ if numel(period)<2
     if(LeftLeg==0)
         data=MirrowData(data);   
     end
-    left_cycle_left=data;
+    left_cycle_left{1}=data(:,period(1):period(2));
 
 elseif (LeftLeg==1)
-    left_cycle_left=data(:,period(1):period(2)); %take first period
-
+    for p=1:numel(period)-1
+        left_cycle_left{p}=data(:,period(p):period(p+1)); %take first period
+    end
 else
         data=MirrowData(data);
-        left_cycle_left = data(:,period(1):period(2));
-        period=[1, size(left_cycle_left,2)];
-end
-            
+        for p=1:numel(period)-1
+        left_cycle_left{p} = data(:,period(p):period(p+1));
+        %period=[1, size(left_cycle_left,2)];
+
+        end
+end    
 %%
 %reshape the data to shape 25xT, where T - number of frames
 % select only leg-related joints
@@ -160,10 +163,15 @@ end
  %% plot final period
  close all
 figure
-    anklZ= left_cycle_left([14*3+1:14*3+3],:);
-    plot(anklZ'); hold on  
-    scatter(period,[anklZ(3,period(1));anklZ(3,period(2))], 'r*'); title('Final cycle data'); hold off;
+for p=1:numel(left_cycle_left)
+    data=left_cycle_left{p};
+    anklZ= data([14*3+1:14*3+3],:);
+    plot(anklZ');title('Final cycle data');
+    [N T]=size( left_cycle_left{p});    
+     left_cycle_left{p}=reshape(left_cycle_left{p}, 3, 25*T)';
+      pause();
+end
     pause();
-[N T]=size( left_cycle_left);    
- left_cycle_left=reshape(left_cycle_left, 3, 25*T)';
+    % possibly filtering
+
 end
