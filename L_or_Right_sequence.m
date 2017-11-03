@@ -1,7 +1,7 @@
 %check if left or right sequence and flip of needed
 function left_cycle_left=L_or_Right_sequence(seq)
 [N T]=size(seq);
-
+N/25
 data=reshape(seq', 75, N/25);
 anklZ=data([14*3+1:14*3+3],:);
 ankrZ=data([18*3+1:18*3+3],:);
@@ -16,6 +16,8 @@ plot(ankrZ'); title('Right');
 %% get the data about 
 x=anklZ(3,:)';
 LEFT_original=anklZ;
+A=(max(x)-abs(min(x)))/2;
+A
 %%
 % temp=x;
 % x=y';
@@ -43,7 +45,7 @@ period=[];
 for i=2:size(x)
     previous=x(i-1);
     current=x(i);
-    if (sign(previous)==1 &&  sign(current)==-1)
+    if ((previous>A) &&  (current<=A))
         period=[period, i-1];
     end
 end
@@ -56,10 +58,11 @@ if size(period<2) % no period detected
     data1=MirrowData(data);   
     anklZ=data1([14*3+1:14*3+3],:);
     x=anklZ(3,:)';
+    A=(max(x)-abs(min(x)))/2;
         for i=2:size(x)
              previous=x(i-1);
              current=x(i);
-                if (sign(previous)==1 &&  sign(current)==-1)
+                if ((previous>A) &&  (current<A))
                      period=[period, i-1];
                 end
                 
@@ -72,11 +75,12 @@ if numel(period)<2
   
     figure
     subplot(2,1,1);
-    plot(LEFT_original'); title('Left X Y Z value');
-    subplot(2,1,2);
-    plot(anklZ'); title('Left converted from right X Y Z values');
+    plot(LEFT_original'); title('Left X Y Z value');axis tight
+    subplot(2,1,2); 
+    plot(anklZ'); title('Left converted from right X Y Z values');axis tight
     period=[1, T];
-    LeftLeg = input('no section were detected, decide if you want to keep it, and if yes, for which foot: 1-left, 0=right, 5=skip :');
+    LeftLeg = input('no section were detected, decide if you want to keep it, and if yes, for which foot: 1-left, 2=right, 5=skip :');
+    period=input('and which frames first-last');
     if(LeftLeg==0)
         data=MirrowData(data);   
     end

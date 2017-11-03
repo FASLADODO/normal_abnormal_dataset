@@ -10,21 +10,22 @@ function [] = BDD(folder)
             disp(adresse);
             subfolder=dir(adresse);
             
-            %adresse=[adresse '\' subfolder(3).name]; % NEEDED for test
-            % here the sequences are
-            sequences = dir(adresse);
-            [num_seq, ~]=size(sequences);
-            for j=3:num_seq
-                addresse=[adresse  '\' sequences(j).name]; %go to the first subfolder
-                sub_test=dir(addresse);
-                for dd=3:size(sub_test)
-                    addr=[addresse '\' sub_test(dd).name];
-                    XYZ = GetDataXYZ(addr);
-                    save_str{dd-2} = XYZ;
-                end
+            for m=3:size(subfolder,1)
+                adr=[adresse '\' subfolder(m).name]; % NEEDED for test
+                % here the sequences are
+                sequences = dir( adr);
+                [num_seq, ~]=size(sequences);
+                for j=3:num_seq
+                    addresse=[adr  '\' sequences(j).name]; %go to the first subfolder
+               % addr=[addresse '\' sub_test(3).name];
+                    XYZ = GetDataXYZ(addresse);
+                    save_str{m-2} = XYZ;
+ 
                
+                end
+                   
             end
-            [data_save.(d(i).name)]=save_str;          
+         [data_save.(d(i).name)]=save_str;       
         end
     end
 save('testing.mat', 'data_save');

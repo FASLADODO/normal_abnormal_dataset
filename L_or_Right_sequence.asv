@@ -16,6 +16,7 @@ plot(ankrZ'); title('Right');
 %% get the data about 
 x=anklZ(3,:)';
 LEFT_original=anklZ;
+A=min(x)-max(x)/2;
 %%
 % temp=x;
 % x=y';
@@ -88,7 +89,7 @@ elseif (LeftLeg==1)
 else
         data=MirrowData(data);
         left_cycle_left = data(:,period(1):period(2));
-        period=[1, size(]
+        period=[1, size(left_cycle_left,2)];
 end
             
 %%
@@ -160,6 +161,6 @@ figure
     plot(anklZ'); hold on  
     scatter(period,[anklZ(3,period(1));anklZ(3,period(2))], 'r*'); title('Final cycle data'); hold off;
     pause();
-    
+[N T]=size( left_cycle_left);    
  left_cycle_left=reshape(left_cycle_left, 3, 25*T)';
 end
