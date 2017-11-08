@@ -1,4 +1,4 @@
-% read data function
+h% read data function
 function [XYZ] = GetDataXYZ(address)
 %check what is in this folder
 file_to_read = strcat(address, '\skeleton.txt');

@@ -34,6 +34,7 @@ for ii=1:num_persons
     person=train.(persons{ii});
     disfucntions=size(person,2);
     for k=1:disfucntions
+        
     disf=person{k};
         for j=1:size(disf,2)
              data=disf{j};
