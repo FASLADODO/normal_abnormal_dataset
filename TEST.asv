@@ -15,8 +15,8 @@ for ii=1:num_persons
         data=person{j};
         %PlotData(data);
         data=L_or_Right_sequence(data);
-        if isempty(data{1}) || (size(data{1},2)==1)
-        continue;
+        if isnan(data)
+        continue
         end
         %PlotData(data);
        covMat=MakeCovarianceMatrix(data);
@@ -26,4 +26,3 @@ for ii=1:num_persons
 [final_for_test.(persons{ii})]=save_str;
 [final_for_test_covariance.(persons{ii})]=save_str_cov;  
 end
-
