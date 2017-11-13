@@ -1,6 +1,6 @@
 % main experiment
 % load data
-train=load('normal_evaluation/testing.mat')
+train=load('normal_evaluation/training.mat')
 train=train.data_save;
 persons=fieldnames(train);
 num_persons=numel(persons);
@@ -15,6 +15,9 @@ for ii=1:num_persons
         data=person{j};
         %PlotData(data);
         data=L_or_Right_sequence(data);
+        if isempty(data{1}) || (size(data{1},2)==1)
+        continue;
+        end
         %PlotData(data);
        covMat=MakeCovarianceMatrix(data);
        save_str_cov{j}=covMat;
@@ -23,3 +26,4 @@ for ii=1:num_persons
 [final_for_test.(persons{ii})]=save_str;
 [final_for_test_covariance.(persons{ii})]=save_str_cov;  
 end
+
