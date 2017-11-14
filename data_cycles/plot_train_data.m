@@ -1,4 +1,4 @@
-function [  ] = plot_train_data( )
+function [train_for_model] = plot_train_data( )
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -79,7 +79,7 @@ for ii=1:num_persons
              
              
              
-             train_for_model=[train_for_model, train_for_model];
+             train_for_model=[train_for_model, selected_joints];
          end
     end
 
