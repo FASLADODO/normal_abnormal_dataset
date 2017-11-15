@@ -85,7 +85,7 @@ for ii=1:num_persons
 
 end
 
-
+save('train_for_model.mat', 'train_for_model');
 
 end
 

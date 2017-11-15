@@ -5,19 +5,20 @@ data_train=data_train.train_for_model;
 [N T]=size(data_train);
 nS=T/50;
 %number of sequences
-state=zeros(9,nS*10);
+state=zeros(1,nS*10);
 GMM_state={};
 model=1;
 for i=3:10:48
     h=1;
-    for j=1:50:T % for all sequences
-    state(:,h:h+9)=data_train(3:3:N,[j+(10*(model-1)):j+(10*(model-1))+9]);
+    for j=1:50:T-1 % for all sequences
+ 
+    state(:,h:h+9)=data_train(3,[j+(10*(model-1)):j+(10*(model-1))+9]);
     % plot the selection
     % GMM to learn the data
     h=h+10;
     end 
-
-    obj = fitgmdist(state',9);
+   
+    obj = fitgmdist(state',1);
     GMM_state{model}=obj;
     model=model+1;
 end
@@ -52,11 +53,17 @@ nS=T/50;
 
 
 for i=1:50:T
-    data_seq=normal(3:3:N,i:i+49);
+    data_seq=normal(3,i:i+49);
         for j=1:10:50
             state=data_seq(:,j:j+9);
-            state=mean(state');
-            pr = posterior(GMM_state{1}, state);
+            state=mean(state,2);
+          %  pr = posterior(GMM_state{1}, state');
+          state
+          GMM_state{1}.mu
+          if ((state >=(GMM_state{1}.mu-GMM_state{1}.Sigma*2)) && (state <=(GMM_state{1}.mu+GMM_state{1}.Sigma*2)))
+             display('fits to distribution');
+          end
+      
         end
 
 
@@ -72,7 +79,7 @@ nS=T/50;
 
 
 for i=1:50:T
-    data_seq=LKI(3:3:N,i:i+49);
+    data_seq=LKI(3,i:i+49);
         for j=1:10:50
             state=data_seq(:,j:j+9);
             state=mean(state,2);
