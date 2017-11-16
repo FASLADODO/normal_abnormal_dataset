@@ -76,7 +76,7 @@ for i=1:50:T
         for j=1:10:50
             state=data_seq(:,j:j+9);
             state=mean(state,2);
-            pr = posterior(GMM_state{1}, state)
+            pr = posterior(GMM_state{1}, state')
         end
 
 

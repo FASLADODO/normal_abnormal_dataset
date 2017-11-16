@@ -2,6 +2,22 @@
 % for 5 key positions
 data_train=load('final_data_for_train_test/train_for_model.mat');
 data_train=data_train.train_for_model;
+
+%% possible normalization of the data
+
+
+
+figure(2)
+hold on
+for h=1:50:2900
+    figure(2)
+    normalized_data = featureNormalize(data_train(3, h:h+49)')';
+
+    plot( normalized_data,'b');
+end
+
+
+
 [N T]=size(data_train);
 nS=T/50;
 %number of sequences
@@ -52,17 +68,31 @@ nS=T/50;
 %number of sequences
 
 
+
+fits=[];
+
 for i=1:50:T
     data_seq=normal(3,i:i+49);
+    data_seq = featureNormalize(data_seq')';
+    figure(2)
+    plot(data_seq, 'r-*');
+    
         for j=1:10:50
             state=data_seq(:,j:j+9);
             state=mean(state,2);
           %  pr = posterior(GMM_state{1}, state');
           state
-          GMM_state{1}.mu
-          if ((state >=(GMM_state{1}.mu-GMM_state{1}.Sigma*2)) && (state <=(GMM_state{1}.mu+GMM_state{1}.Sigma*2)))
+         % for f=1:1:5
+         f=1;
+          GMM_state{f}.mu
+          if ((state >=(GMM_state{f}.mu-GMM_state{f}.Sigma*2)) && (state <=(GMM_state{f}.mu+GMM_state{f}.Sigma*2)))
              display('fits to distribution');
-          end
+             fits=[fits, 1];
+        
+         % end
+         else
+             fits=[fits,0];
+        end
       
         end
 
