@@ -9,14 +9,14 @@ data_train=data_train.train_for_model;
 j=1;
 for h=1:50:D
 
-   normalized = featureNormalize(data_train(:, h:h+49)')';
+   normalized = featureNormalize(data_train(3:3:end, h:h+49)')';
    % get the max and mean
    min_val(j,:)=min(normalized,[],2); % min
    max_val(j,:)=max(normalized,[],2); % max
    mean_val(j,:)=mean([max_val(j,:),min_val(j,:)]);
    [~,I] = min(abs(bsxfun(@minus,abs(normalized),abs(mean_val(j,:))')),[],2); % value closest to amplitude min/max
    center(j,:)=I./50;
-   normalized_data(1:27,h:h+49)=normalized;
+   normalized_data(1:9,h:h+49)=normalized;
    j=j+1;
 end
 
@@ -49,7 +49,7 @@ fits=[];
    j=1;
 for i=1:50:T
  
-    data_seq=normal(:,i:i+49);
+    data_seq=normal(3:3:end,i:i+49);
     data_seq = featureNormalize(data_seq')';
      min_val(j,:)=min( data_seq,[],2); % min
      max_val(j,:)=max( data_seq,[],2); % max
