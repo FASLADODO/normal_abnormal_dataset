@@ -2,6 +2,16 @@
 % for 5 key positions
 data_train=load('final_data_for_train_test/train_for_model.mat');
 data_train=data_train.train_for_model;
+
+%% normalization towards mean value
+for h=1:50:D
+
+   normalized = featureNormalize(data_train(:, h:h+49)')';
+   % get the max and mean
+   normalized_data(1:27,h:h+49)=normalized;
+
+end
+data_train=normalized
 [N T]=size(data_train);
 
 nS=T/50;
@@ -18,7 +28,7 @@ for i=3:10:48
     h=h+10;
     end 
 
-    obj = fitgmdist(state',9);
+    obj = fitgmdist(state',8);
     GMM_state{model}=obj;
     model=model+1;
 end
@@ -57,7 +67,8 @@ for i=1:50:T
         for j=1:10:50
             state=data_seq(:,j:j+9);
             state=mean(state');
-            pr = posterior(GMM_state{1}, state);
+            [pr, nlogl]= posterior(GMM_state{1}, state);
+            nlogl
         end
 
 

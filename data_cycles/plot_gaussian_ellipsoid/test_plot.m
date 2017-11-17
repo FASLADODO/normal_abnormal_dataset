@@ -1,8 +1,8 @@
 % gaussian visualization
 figure(2)
 hold on
-for i=1:8
-plot_gaussian_ellipsoid(obj.mu(i,:), obj.Sigma(:,:,i))
+for i=1:9
+plot_gaussian_ellipsoid(Mu(i,:), Sigma(:,:,i));
 pause();
 end
 
