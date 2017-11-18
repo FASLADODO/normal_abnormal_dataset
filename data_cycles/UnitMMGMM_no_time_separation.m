@@ -27,6 +27,8 @@ for h=1:50:T
   % get the max and mean
    normalized= data_train(:, h:h+49);
    normalized_data(1:27,h:h+49)=normalized;
+%    delta=bsxfun(@minus, (normalized(:,1)),0);
+%    normalized=bsxfun(@minus, normalized, delta);
 
    figure(1)
    M=plot(normalized(1:3,:)');           % line plot
@@ -63,7 +65,7 @@ data_train=normalized;
 nS=T/50;
 %number of sequences
 
-GMM_model = fitgmdist(normalized_data', 8);
+GMM_model = fitgmdist(normalized_data', 7);
 
 
 % example on how to  generate random data by this model 
@@ -100,6 +102,9 @@ for h=1:50:T
   
    normalized= normal(:, h:h+49);
    normalized_data_test(1:27,h:h+49)=normalized;
+%    delta=bsxfun(@minus, (normalized(:,1)),0);
+%    normalized=bsxfun(@minus, normalized, delta);
+%    
    
    figure(1)
    M=plot(normalized(1:3,:)');           % line plot
@@ -131,12 +136,12 @@ for h=1:50:T
    [pr, nlogl(i)]= posterior(GMM_model, normalized');
    i=i+1;
 end
-
+i
 
 
 %% abnormal LKI
-LKI=load('final_data_for_train_test/test_LFD.mat');
-LKI=LKI.train_for_model_LFD;
+LKI=load('final_data_for_train_test/test_RFD.mat');
+LKI=LKI.train_for_model_RFD;
 [N T]=size(LKI);
 nS=T/50;
 %number of sequences
@@ -148,7 +153,8 @@ for h=1:50:T
    % get the max and mean
    normalized=LKI(:, h:h+49);
    normalized_data_LKI(1:27,h:h+49)=normalized;
-   %
+%    delta=bsxfun(@minus, (normalized(:,1)),0);
+%    normalized=bsxfun(@minus, normalized, delta);
    figure(1)
    figure(1)
    M=plot(normalized(1:3,:)');           % line plot
@@ -177,6 +183,8 @@ for h=1:50:T
  figure(9)
    M=plot(normalized(25:27,:)');           % line plot
    set(M, {'color'}, {[1 0.1 0];[0.2 1 0];[0 0.4 1]},  NameArray, ValueArray, 'LineWidth',2);
+     [pr, nlogl(i)]= posterior(GMM_model, normalized');
+    i=i+1;
 end
 
 
