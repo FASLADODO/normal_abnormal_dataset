@@ -159,7 +159,7 @@
 %%
 % align the data using the dtw
 coeff_res=50;
-train=load('final_for_testing.mat');
+train=load('final_for_testing_no_right.mat');
 train=train.final_for_test;
 persons=fieldnames(train);
 % 
@@ -268,7 +268,11 @@ for ii=1:num_persons
                          M=plot(right_feet_XYZ);
                          set(M, {'color'}, {[1 0 0];[0 1 0];[0 0 1]});
                          suptitle('Right normal')
+                         
+                         var_cont = input('no section were detected, decide if you want to keep it, and if yes, for which foot: 1-left, 2=right, 5=skip :');
+                         if var_cont~=0   
                          train_for_model_normal=[train_for_model_normal, selected_joints];
+                         end
                   case 4 %'RFD'
                      
                       figure(4)

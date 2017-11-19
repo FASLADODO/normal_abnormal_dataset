@@ -1,6 +1,6 @@
 % MM and gaussian unit test
 % for 5 key positions
-data_train=load('final_data_for_train_test/train_for_model.mat');
+data_train=load('final_data_for_train_test/train_for_model_2.mat');
 data_train=data_train.train_for_model;
 [N T]=size(data_train);
 %% normalization towards mean value
@@ -65,7 +65,7 @@ data_train=normalized;
 nS=T/50;
 %number of sequences
 
-GMM_model = fitgmdist(normalized_data', 7);
+%GMM_model = fitgmdist(normalized_data', 7);
 
 
 % example on how to  generate random data by this model 
@@ -89,7 +89,7 @@ GMM_model = fitgmdist(normalized_data', 7);
 
 
 % test on the normal set
-normal=load('final_data_for_train_test/test_normal.mat');
+normal=load('final_data_for_train_test/test_normal_2.mat');
 normal=normal.train_for_model_normal;
 [N T]=size(normal);
 nS=T/50;
@@ -133,14 +133,14 @@ for h=1:50:T
    figure(9)
    M=plot(normalized(25:27,:)');           % line plot
    set(M, {'color'}, {[0.6 0 0];[0 0.6 0];[0 0 0.6]}, 'LineWidth',0.3);
-   [pr, nlogl(i)]= posterior(GMM_model, normalized');
+%   [pr, nlogl(i)]= posterior(GMM_model, normalized');
    i=i+1;
 end
 i
 
 
 %% abnormal LKI
-LKI=load('final_data_for_train_test/test_RFD.mat');
+LKI=load('final_data_for_train_test/test_RFD_2.mat');
 LKI=LKI.train_for_model_RFD;
 [N T]=size(LKI);
 nS=T/50;
@@ -183,7 +183,7 @@ for h=1:50:T
  figure(9)
    M=plot(normalized(25:27,:)');           % line plot
    set(M, {'color'}, {[1 0.1 0];[0.2 1 0];[0 0.4 1]},  NameArray, ValueArray, 'LineWidth',2);
-     [pr, nlogl(i)]= posterior(GMM_model, normalized');
+ %    [pr, nlogl(i)]= posterior(GMM_model, normalized');
     i=i+1;
 end
 

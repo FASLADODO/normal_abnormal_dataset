@@ -51,23 +51,23 @@ for i=2:size(x)
 end
     
 % 4 of those = cycle
-if size(period<2) % no period detected
-    period=[];
-    % change the left for right and check again
-    LeftLeg=0;
-    data1=MirrowData(data);   
-    anklZ=data1([14*3+1:14*3+3],:);
-    x=anklZ(3,:)';
-    A=(max(x)-abs(min(x)))/2;
-        for i=2:size(x)
-             previous=x(i-1);
-             current=x(i);
-                if ((previous>A) &&  (current<A))
-                     period=[period, i-1];
-                end
-                
-        end
-end
+% if size(period<2) % no period detected
+%     period=[];
+%     % change the left for right and check again
+%     LeftLeg=0;
+%     data1=MirrowData(data);   
+%     anklZ=data1([14*3+1:14*3+3],:);
+%     x=anklZ(3,:)';
+%     A=(max(x)-abs(min(x)))/2;
+%         for i=2:size(x)
+%              previous=x(i-1);
+%              current=x(i);
+%                 if ((previous>A) &&  (current<A))
+%                      period=[period, i-1];
+%                 end
+%                 
+%         end
+% end
 
 
 % if no right or left sequence were detected

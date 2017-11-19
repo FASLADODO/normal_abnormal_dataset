@@ -47,10 +47,10 @@ input=input([14*3+1:14*3+3, 12*3+1:12*3+3, 13*3+1:13*3+3, 15*3+1:15*3+3, 3*3+1:3
 % 
 
 % PlotData_with_selected(seq, XYZ);
-% 
-%   XYZ=reshape(input, 3, 9*t)';
-% % % 
-%   PlotData_with_selected(seq, XYZ);
+% % 
+%    XYZ=reshape(input, 3, 9*t)';
+% % % % 
+%    PlotData_with_selected(seq, XYZ);
 
 
 [N T]=size(input);

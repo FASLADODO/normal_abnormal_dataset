@@ -4,7 +4,7 @@ function [train_for_model] = plot_train_data( )
 
 % align the data using the dtw
 coeff_res=50;
-train=load('final_for_training.mat');
+train=load('final_for_training_no_right.mat');
 train=train.final_for_test;
 persons=fieldnames(train);
 train_for_model=[];
@@ -21,16 +21,23 @@ train_for_model=[];
         figure(9); hold on
 
         
-        
+ hh=0;        
 for ii=1:num_persons
 %for each person
     person=train.(persons{ii});
     disfucntions=size(person,2);
-   
+  
     for k=1:disfucntions
     disf=person{k};
         for j=1:size(disf,2)
+            hh=hh+1;
+             if hh==7|| hh==9
+                 continue
+             end
              data=disf{j};
+        
+             
+             
              % reshape data into a normal dimisions
              [N T]=size(data);
             %reshape the data to shape 25xT, where T - number of frames
@@ -80,6 +87,9 @@ for ii=1:num_persons
              
              
              train_for_model=[train_for_model, selected_joints];
+             
+             hh
+             pause();
          end
     end
 
