@@ -3,14 +3,14 @@ data_train=load('final_data_for_train_test/train_for_model.mat');
 data_train=data_train.train_for_model;
 [J D]=size(data_train);
 % normalization
-for h=1:50:D
-
-   normalized = featureNormalize(data_train(:, h:h+49)')';
-   % get the max and mean
-   normalized_data(1:27,h:h+49)=normalized;
-
-end
-
+% for h=1:50:D
+% 
+%    normalized = featureNormalize(data_train(:, h:h+49)')';
+%    % get the max and mean
+%    normalized_data(1:27,h:h+49)=normalized;
+% 
+% end
+normalized_data=data_train;
 XYZ=reshape(data_train, 3, D*9)';
 %normalized_data=data_train;
 %% possible normalization of the data
@@ -72,28 +72,100 @@ Mu(9,:)=mu_9;
 var_9=cov(joint_9');
 Sigma(:,:,9)=var_9;
 
-XYZ=reshape(normalized_data, 3, D*9)';
-figure(1)
-grid on
-hold on
-customColorMap = zeros(9, 3); % Initialize.
-% Make the first 10 points red
-customColorMap(1:1, :) = repmat([1, 0, 0], 1, 1);
-% Make the next 10 points dark green
-customColorMap(2:2, :) = repmat([0, 0.6, 0], 1, 1);
-customColorMap(3:3, :) = repmat([0.1, 0.2, 0], 1, 1);
-customColorMap(4:4, :) = repmat([0, 0.0, 1], 1, 1);
-customColorMap(5:5, :) = repmat([0, 2, 0], 1, 1);
-customColorMap(6:6, :) = repmat([0, 0, 0.5], 1, 1);
-customColorMap(7:7, :) = repmat([0.8, 0.2, 0], 1, 1);
-customColorMap(8:8, :) = repmat([0.4, 0, 0.4], 1, 1);
-% Make the remaining points blue
-customColorMap(9:end, :) = repmat([0, 1, 0], 1, 1);
-for i=1:9:size(XYZ)
-    XYZ=reshape(data_train, 3, D*9)';
-figure(1)
-    scatter3(XYZ(i:i+8, 1), XYZ(i:i+8, 2),XYZ(i:i+8,3), 5, customColorMap,'filled');
+% XYZ=reshape(normalized_data, 3, D*9)';
+% figure(1)
+% grid on
+% hold on
+% customColorMap = zeros(9, 3); % Initialize.
+% % Make the first 10 points red
+% customColorMap(1:1, :) = repmat([1, 0, 0], 1, 1);
+% % Make the next 10 points dark green
+% customColorMap(2:2, :) = repmat([0, 0.6, 0], 1, 1);
+% customColorMap(3:3, :) = repmat([0.1, 0.2, 0], 1, 1);
+% customColorMap(4:4, :) = repmat([0, 0.0, 1], 1, 1);
+% customColorMap(5:5, :) = repmat([0, 2, 0], 1, 1);
+% customColorMap(6:6, :) = repmat([0, 0, 0.5], 1, 1);
+% customColorMap(7:7, :) = repmat([0.8, 0.2, 0], 1, 1);
+% customColorMap(8:8, :) = repmat([0.4, 0, 0.4], 1, 1);
+% % Make the remaining points blue
+% customColorMap(9:end, :) = repmat([0, 1, 0], 1, 1);
+% for i=1:9:size(XYZ)
+%     XYZ=reshape(data_train, 3, D*9)';
+% figure(1)
+%     scatter3(XYZ(i:i+8, 1), XYZ(i:i+8, 2),XYZ(i:i+8,3), 5, customColorMap,'filled');
+% end
+% % % % 
+% % 
+%%
+% test normal calculate probability for each sequence
+normal=load('final_data_for_train_test/test_normal.mat');
+normal=normal.train_for_model_normal;
+[N T]=size(normal);
+nS=T/50;
+Final_probabilities = cell(nS,1);
+l=1;
+figure(5)
+hold on;
+for h=1:50:T
+
+ %  normalized = featureNormalize(normal(:, h:h+49)')';
+   % get the max and mean
+   joint=1;
+   pdf_data=zeros(9, 50);
+   normalized= normal(:, h:h+49);
+   for m=1:3:27
+       for k=1:50
+       pdf_data(joint,k) = mvncdf(normalized(m:m+2,k)',Mu(joint,:), Sigma(:,:,joint));
+       end
+   joint=joint+1;    
+   end
+   figure(5);
+   plot(pdf_data','r');
+   Final_probabilities{l,1}=pdf_data;
+   l=l+1;
 end
-% % % 
-% 
- 
+
+l
+%% test data
+LKI=load('final_data_for_train_test/test_RFD.mat');
+LKI=LKI.train_for_model_RFD;
+[N T]=size(LKI);
+nS=T/50;
+%number of sequences
+NameArray = {'LineStyle'};
+ValueArray = { '-.'};
+for h=1:50:T
+   joint=1;
+   pdf_data=zeros(9, 50);
+   %normalized = featureNormalize(LKI(:, h:h+49)')';
+   % get the max and mean
+   normalized=LKI(:, h:h+49);
+   for m=1:3:27
+       for k=1:50
+       pdf_data(joint,k) = mvncdf(normalized(m:m+2,k)',Mu(joint,:), Sigma(:,:,joint));
+       end
+       joint=joint+1;    
+   end
+   figure(5);
+   plot(pdf_data','b');
+   Final_probabilities{l,1}=pdf_data;
+   l=l+1;
+end
+   
+%%
+% check by plotting for different joints
+figure(4)
+hold on
+
+for k=1:26
+    if k<18
+        figure(4)
+        plot(Final_probabilities{k,1}(1,:),'r');
+        P(k)=min(min(Final_probabilities{k,1}'))
+    else
+        figure(4)
+        plot(Final_probabilities{k,1}(1,:),'b');
+        P(k)=min(min(Final_probabilities{k,1}'))
+    end
+end
+        
