@@ -1,6 +1,6 @@
 % MM and gaussian unit test
 % for 5 key positions
-data_train=load('final_data_for_train_test/train_for_model_3.mat');
+data_train=load('final_data_for_train_test/train_for_model_2.mat');
 data_train=data_train.train_for_model;
 [N T]=size(data_train);
 %% normalization towards mean value
@@ -24,9 +24,9 @@ figure(9)
 hold on;
 for h=1:50:T
      %normalized = featureNormalize(data_train(:, h:h+49)')';
-   % normalized= Normalize_between_0_and_1(data_train(:, h:h+49));
+    normalized= Normalize_between_0_and_1(data_train(:, h:h+49));
   % get the max and mean
-  normalized= data_train(:, h:h+49);
+  % normalized= data_train(:, h:h+49);
    normalized_data(1:27,h:h+49)=normalized;
 %    delta=bsxfun(@minus, (normalized(:,1)),0);
 %    normalized=bsxfun(@minus, normalized, delta);
@@ -60,18 +60,13 @@ for h=1:50:T
    set(M, {'color'}, {[0.6 0 0];[0 0.6 0];[0 0 0.3]}, 'LineWidth',0.5);
 end
 
-data_train=normalized;
+Z_train=normalized_data(3:3:end,:);
 
 
 nS=T/50;
 %number of sequences
 
-GMM_model = fitgmdist(normalized_data', 7); 
-
-% 5=15 nombre de gaussians
-%with angles? concatenate for each frame
-% bbig dimensionality  - so much more data needed
-% with angles -> take an average of angles in time -> 50>5
+GMM_model = fitgmdist(Z_train', 12);
 
 
 % example on how to  generate random data by this model 
@@ -106,8 +101,8 @@ for h=1:50:T
  %  normalized = featureNormalize(normal(:, h:h+49)')';
    % get the max and mean
   
-   normalized= normal(:, h:h+49);
-  %normalized= Normalize_between_0_and_1(normal(:, h:h+49));
+  % normalized= normal(:, h:h+49);
+  normalized= Normalize_between_0_and_1(normal(:, h:h+49));
    normalized_data_test(1:27,h:h+49)=normalized;
 %    delta=bsxfun(@minus, (normalized(:,1)),0);
 %    normalized=bsxfun(@minus, normalized, delta);
@@ -140,7 +135,8 @@ for h=1:50:T
    figure(9)
    M=plot(normalized(25:27,:)');           % line plot
    set(M, {'color'}, {[0.6 0 0];[0 0.6 0];[0 0 0.6]}, 'LineWidth',0.3);
-   [pr, nlogl(i)]= posterior(GMM_model, normalized');
+   Z_2=normalized(3:3:end,:);
+   [pr, nlogl(i)]= posterior(GMM_model, Z_2');
    i=i+1;
 end
 i
@@ -158,8 +154,8 @@ for h=1:50:T
 
    %normalized = featureNormalize(LKI(:, h:h+49)')';
    % get the max and mean
-   %normalized= Normalize_between_0_and_1(LKI(:, h:h+49));
-   normalized=LKI(:, h:h+49);
+   normalized= Normalize_between_0_and_1(LKI(:, h:h+49));
+   %normalized=LKI(:, h:h+49);
    normalized_data_LKI(1:27,h:h+49)=normalized;
 %    delta=bsxfun(@minus, (normalized(:,1)),0);
 %    normalized=bsxfun(@minus, normalized, delta);
@@ -191,7 +187,8 @@ for h=1:50:T
  figure(9)
    M=plot(normalized(25:27,:)');           % line plot
    set(M, {'color'}, {[1 0.1 0];[0.2 1 0];[0 0.4 1]},  NameArray, ValueArray, 'LineWidth',2);
-     [pr, nlogl(i)]= posterior(GMM_model, normalized');
+ Z_3=normalized(3:3:end,:);
+   [pr, nlogl(i)]= posterior(GMM_model,Z_3');
     i=i+1;
 end
 

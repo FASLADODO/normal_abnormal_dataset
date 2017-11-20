@@ -35,7 +35,7 @@ static    = 1;
             end
   
             
-            pause(0.2);
+            pause(0.01);
         end
 
 

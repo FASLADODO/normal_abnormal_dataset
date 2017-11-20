@@ -4,12 +4,12 @@ function [train_for_model] = plot_train_data( )
 
 % align the data using the dtw
 coeff_res=50;
-train=load('final_for_training_no_right.mat');
+train=load('final_for_testing_3.mat');
 train=train.final_for_test;
 persons=fieldnames(train);
 train_for_model=[];
             %reshape the data to shape 25xT, where T - number of frames
-            num_persons=numel(persons);
+        num_persons=numel(persons);
         figure(3); hold on 
         figure(1); hold on
         figure(2); hold on
@@ -21,7 +21,7 @@ train_for_model=[];
         figure(9); hold on
 
         
- hh=0;        
+     hh=0;   
 for ii=1:num_persons
 %for each person
     person=train.(persons{ii});
@@ -30,19 +30,20 @@ for ii=1:num_persons
     for k=1:disfucntions
     disf=person{k};
         for j=1:size(disf,2)
-            hh=hh+1;
-             if hh==7|| hh==9
+
+hh=hh+1;
+            data=disf{j};
+        
+             if (isempty(data) || numel(data)<200 || hh==12)
                  continue
              end
-             data=disf{j};
-        
-             
              
              % reshape data into a normal dimisions
              [N T]=size(data);
             %reshape the data to shape 25xT, where T - number of frames
              joints_data=reshape(data', 75, N/25);
              [ign t]=size(joints_data);
+
              selected_joints=joints_data([14*3+1:14*3+3, 12*3+1:12*3+3, 13*3+1:13*3+3, 15*3+1:15*3+3, 3*3+1:3*3+3, 19*3+1:19*3+3, 17*3+1:17*3+3,  16*3+1:16*3+3,  18*3+1:18*3+3],:); %take only left ankle, right ankle, left foot, right foot, l hip, r hip, l knee, r knee, mid spine          
            
              coeff_data=size(selected_joints,2);
@@ -87,9 +88,8 @@ for ii=1:num_persons
              
              
              train_for_model=[train_for_model, selected_joints];
-             
-             hh
-             pause();
+        
+         
          end
     end
 

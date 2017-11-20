@@ -2,7 +2,7 @@
 % and  makes a feature based on them
 % MM and gaussian unit test
 % for 5 key positions
-data_train=load('final_data_for_train_test/train_for_model.mat');
+data_train=load('final_data_for_train_test/train_for_model_2.mat');
 data_train=data_train.train_for_model;
 [J D]=size(data_train);
 %% possible normalization of the data
@@ -37,7 +37,7 @@ sigma_center=var(center,1);
 % normal data for test
 
 % test on the normal set
-normal=load('final_data_for_train_test/test_normal.mat');
+normal=load('final_data_for_train_test/test_normal_2.mat');
 normal=normal.train_for_model_normal;
 [N T]=size(normal);
 nS=T/50;

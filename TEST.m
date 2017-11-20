@@ -13,7 +13,6 @@ for ii=1:num_persons
     save_str_cov={};
     for j=1:size(person,2)
         data=person{j};
-        %PlotData(data);
         data=L_or_Right_sequence(data);
         if isempty(data{1}) || (size(data{1},2)==1)
         continue;

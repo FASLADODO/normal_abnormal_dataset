@@ -232,7 +232,7 @@ for ii=1:num_persons
 
               switch k
                   case 1 %'LFD'
-                       train_for_model_LFD=[train_for_model_LFD, selected_joints];
+                      
                        figure(1)
                       %  [Dist,D,k,w] = dtw(x_main,left_feet_XYZ);
                      %   left_feet_Z=left_feet_Z(flipud(w(:,2)));
@@ -241,6 +241,7 @@ for ii=1:num_persons
                         suptitle('LFD Left')
                         figure(6)
                         M=plot(right_feet_XYZ);
+                        train_for_model_LFD=[train_for_model_LFD, selected_joints];
                         set(M, {'color'}, {[1 0 0];[0 1 0];[0 0 1]});
                         suptitle('LFD Right')
 
@@ -257,7 +258,7 @@ for ii=1:num_persons
                         suptitle('LKI Right')
                         train_for_model_LKI=[train_for_model_LKI, selected_joints];
 
-                  case 3 %'normal'
+                  case 5 %'normal'
                         figure(3)
                       %  [Dist,D,k,w] = dtw(x_main,left_feet_Z);
                       %  left_feet_Z=left_feet_Z(flipud(w(:,2)));
@@ -269,10 +270,10 @@ for ii=1:num_persons
                          set(M, {'color'}, {[1 0 0];[0 1 0];[0 0 1]});
                          suptitle('Right normal')
                          
-                         var_cont = input('no section were detected, decide if you want to keep it, and if yes, for which foot: 1-left, 2=right, 5=skip :');
-                         if var_cont~=0   
+%                          var_cont = input('no section were detected, decide if you want to keep it, and if yes, for which foot: 1-left, 2=right, 5=skip :');
+%                          if var_cont~=0   
                          train_for_model_normal=[train_for_model_normal, selected_joints];
-                         end
+                         
                   case 4 %'RFD'
                      
                       figure(4)
@@ -285,20 +286,21 @@ for ii=1:num_persons
                         set(M, {'color'}, {[1 0 0];[0 1 0];[0 0 1]});
                         suptitle('RFD  Left')
                         train_for_model_RFD=[train_for_model_RFD, selected_joints];
-                        
-                  case 5% 'RKI'
+              
+                  case 3% 'RKI'
                    
                     figure(5);
                     M=plot(right_feet_XYZ);           % line plot
                     set(M, {'color'}, {[1 0 0];[0 1 0];[0 0 1]});
+                
                     suptitle('RKI Right')
                     figure(10)
                     M=plot(left_feet_XYZ);           % line plot
                     set(M, {'color'}, {[1 0 0];[0 1 0];[0 0 1]});
-                    suptitle('RKI  Left')                    
+                    suptitle('RKI  Left')  
                     train_for_model_RKI=[train_for_model_RKI, selected_joints];
 
-              
+ 
               end
          end
     end

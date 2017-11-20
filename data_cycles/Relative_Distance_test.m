@@ -15,8 +15,8 @@ hold on
 %figure (3)
 %hold on
 for h=1:50:D
-
-   normalized = featureNormalize(data_train(:, h:h+49)')';
+   normalized=Normalize_between_0_and_1(data_train(:, h:h+49));
+   %normalized = featureNormalize(data_train(:, h:h+49)')';
   % get the max and mean
   %normalized=data_train(:, h:h+49);
   normalized_data(1:27,h:h+49)=normalized;
@@ -40,15 +40,15 @@ clear normalized
 %% abnormal LKI
 figure(1)
 hold on
-LKI=load('final_data_for_train_test/test_LKI_2.mat');
-LKI=LKI.train_for_model_LKI;
+LKI=load('final_data_for_train_test/test_RFD_2.mat');
+LKI=LKI.train_for_model_RFD;
 [N T]=size(LKI);
 nS=T/50;
 %number of sequences
 
 for h=1:50:T
-
-   normalized = featureNormalize(LKI(:, h:h+49)')';
+   normalized=Normalize_between_0_and_1(LKI(:, h:h+49));
+   %normalized = featureNormalize(LKI(:, h:h+49)')';
    % get the max and mean
    %normalized=LKI(:, h:h+49);
    normalized_data_LKI(1:27,h:h+49)=normalized;
