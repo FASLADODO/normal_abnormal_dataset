@@ -27,7 +27,7 @@ for h=1:50:D
       %[normalized(10,i),normalized(11,i), normalized(12,i);normalized(16,i),normalized(17,i),normalized(18,i)]
       %[normalized(7,i),normalized(8,i), normalized(9,i);normalized(19,i),normalized(20,i),normalized(21,i)]
       %scatter3([normalized(1,i),normalized(25,i)], [normalized(2,i),normalized(26,i)], [normalized(3,i),normalized(27,i)], '.', 'b');
-     
+     % ankle hip knee 
   end     
   figure(1)
    plot(dist,'r');
