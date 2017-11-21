@@ -4,7 +4,7 @@ function [train_for_model] = plot_train_data( )
 
 % align the data using the dtw
 coeff_res=50;
-train=load('final_for_testing_3.mat');
+train=load('final_for_training_whole.mat');
 train=train.final_for_test;
 persons=fieldnames(train);
 train_for_model=[];
