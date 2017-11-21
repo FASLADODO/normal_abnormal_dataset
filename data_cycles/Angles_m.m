@@ -6,7 +6,7 @@
 clc
 clear all
 close all
-data_train=load('final_data_for_train_test/train_for_model_3.mat');
+data_train=load('final_data_for_train_test/train_whole.mat');
 data_train=data_train.train_for_model;
 [J D]=size(data_train);
 %% possible normalization of the data
