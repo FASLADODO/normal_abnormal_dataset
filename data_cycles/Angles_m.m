@@ -77,8 +77,8 @@ clear normalized
 %% abnormal LKI
 figure(1)
 hold on
-LKI=load('final_data_for_train_test/test_LKI_2.mat');
-LKI=LKI.train_for_model_LKI;
+LKI=load('final_data_for_train_test/test_normal_2.mat');
+LKI=LKI.train_for_model_normal;
 [N T]=size(LKI);
 nS=T/50;
 %number of sequences
@@ -125,13 +125,13 @@ for h=1:50:T
   plot(angle_2_Hr,'b');
   
   
-  Angles_LKI(1,h:h+49)=angle_2;
-  Angles_LKI(2,h:h+49)=angle_2_r;
-  Angles_LKI(3,h:h+49)=angle_2_H;
-  Angles_LKI(4,h:h+49)=angle_2_Hr;
+  Angles_normal_test(1,h:h+49)=angle_2;
+  Angles_normal_test(2,h:h+49)=angle_2_r;
+  Angles_normal_test(3,h:h+49)=angle_2_H;
+  Angles_normal_test(4,h:h+49)=angle_2_Hr;
   
   
-end
+end 
 % figure(4)
 %    hold on
 %    plot((angle./angler),'b');

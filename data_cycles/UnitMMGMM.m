@@ -1,6 +1,6 @@
 % MM and gaussian unit test
 % for 5 key positions
-data_train=load('final_data_for_train_test/train_for_model.mat');
+data_train=load('angles_data/train_for_model.mat');
 data_train=data_train.train_for_model;
 
 %% normalization towards mean value
