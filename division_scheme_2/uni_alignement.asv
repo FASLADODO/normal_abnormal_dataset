@@ -1,0 +1,30 @@
+% alignment unit
+data_train=load('Train_norm.mat');
+data_train=data_train.Train_norm;
+model=data_train{3};
+s2=model(3,:);
+normalized=data_train{1};
+  s1=normalized(3,:);
+  figure(11)
+  hold on
+  plot(X)
+  plot(model);
+if numel(s1) > numel(s2)
+    slong = s1;
+    sshort = s2;
+else
+    slong = s2;
+    sshort = s1;
+end
+Compute the cross-correlation of the two signals. Run xcorr with the longer signal as first argument and the shorter signal as second argument. Plot the result.
+
+[acor,lag] = xcorr(slong,sshort);
+
+[acormax,I] = max(abs(acor));
+lagDiff = lag(I)
+lagDiff = 15
+figure
+stem(lag,acor)
+hold on
+plot(lagDiff,acormax,'*')
+hold off
