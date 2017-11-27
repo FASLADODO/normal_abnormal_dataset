@@ -1,25 +1,36 @@
 % final model creation and test
 
-Train_normal=load('angles/Angles_normal_train');
+Train_normal=load('angles/Angles_LFD_test');
 Train_normal=Train_normal.Angles_normal;
 Model = Train_normal{1};
-
+normalized{1}=[zeros(4,abs(0)),Model];
 figure(1)
 hold on
-plot(Model(1,:),'-*b');
 figure(2)
 hold on
-plot(Model(2,:),'-*b');
+
 figure(3)
 hold on
-plot(Model(3,:),'-*b');
+
 figure(4)
-plot(Model(4,:),'-*b');
+
 hold on
-normalized{1}=Model;
+figure(1)
+plot(normalized{1}(1,:),'-*b');
+figure(2)
+plot(normalized{1}(2,:),'-*b');
+figure(3)
+plot(normalized{1}(3,:),'-*b');
+figure(4)
+plot(normalized{1}(4,:),'-*b');
+
+
 for i=2:numel(Train_normal)
     data=Train_normal{i};
     
+    if isempty(data)
+        continue
+    end
     s1=Model(1,:);
     s2=data(1,:);
     %X1=xcorr(s1,s2);   %compute cross-correlation between vectors s1 and s2
@@ -34,5 +45,13 @@ for i=2:numel(Train_normal)
     else
         normalized{i}=[data,zeros(4,abs(delay))];
     end
+figure(1)
+plot(normalized{i}(1,:),'-*r');
+figure(2)
+plot(normalized{i}(2,:),'-*r');
+figure(3)
+plot(normalized{i}(3,:),'-*r');
+figure(4)
+plot(normalized{i}(4,:),'-*r');
 pause();
 end
